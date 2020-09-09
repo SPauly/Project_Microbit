@@ -1,4 +1,3 @@
-# Schreibe hier Deinen Code :-)
 from microbit import accelerometer
 from microbit import sleep
 import math
@@ -30,9 +29,10 @@ class LinearShiftRegister: #Linear-shift-register helps further filtering the da
     sample_old = 0 #holds the previous sample
     precision = 0 #difference between the previous and the current value in order to be pushed to sample_new
     is_step = False
-    step_duration = 0
+
     def __init__(self, prec):
         self.precision = prec
+
     def update(self, sample_result, moving_av): #updates the Register and watches for peaks
         self.sample_old = self.sample_new #shift new sample to old one
         if sample_result > self.sample_new + self.precision or sample_result < self.sample_new - self.precision: #is the sample_result precision bigger or smaller
@@ -41,13 +41,6 @@ class LinearShiftRegister: #Linear-shift-register helps further filtering the da
                 self.is_step = True #has to be a step
             else:
                 self.is_step = False
-                #self.step_duration = 0
-
-        #if self.is_step:
-            #self.step_duration += 1
-            #if self.step_duration >= 100:
-                #self.step_duration = 0
-                #self.is_step = False
         return self.is_step
 
     def ret_new(self):
@@ -55,31 +48,34 @@ class LinearShiftRegister: #Linear-shift-register helps further filtering the da
     def ret_old(self):
         return (self.sample_old)
 
+steps_temp = 0 #holds the temporary steps
+
 class CountRegulation:
     searching_regulation = True #puts the counter in searching for a rhythmic pattern False = found one
-    steps_temp = 0 #holds the temporary steps
 
 
     def validate_step(self, interval, regulation):
+        global steps_temp
         #interval = the time between two steps regulation = amount of steps it takes to be a
         #rhythmic pattern
-        #print(self.steps_temp)
-        if self.steps_temp >= regulation: # True = we are in rhythmic pattern now and start back at 0
-            self.steps_temp = 0
-            self.searching_regulation = False
-        #print(interval)
+        #print(steps_temp)
+        if steps_temp >= regulation: # True = we are in rhythmic pattern now and start back at 0
+            steps_temp = 0
+            searching_regulation = False
+        if interval > 2:
+            print(interval)
         if interval >= 10 and interval <= 100: #the step happened in a valid timewindow
-            self.steps_temp += 1 #increase steps_temp
-            print("\nValid Step -------------------  ", self.steps_temp)
-            if self.steps_temp >= regulation: #are we in a pattern?
+            steps_temp += 1 #increase steps_temp
+            print("\nValid Step -------------------  ", steps_temp)
+            if steps_temp >= regulation: #are we in a pattern?
                 self.searching_regulation = False #then go in found mode to update frequently
 
         else:
-            self.steps_temp = 0 #means pattern is set to 0 again
+            steps_temp = 0 #means pattern is set to 0 again
             self.searching_regulation = True #we have to search a new one
 
         if self.searching_regulation == False: #means we are in a pattern and can now update the steps
-            return self.steps_temp
+            return steps_temp
         else: #in no pattern yet and will just return 0
             return 0
 
@@ -101,10 +97,10 @@ while True:
     values = accelerometer.get_values() #x, y, z -> tuple
     average = math.sqrt(quadsum(values)/3) #average of the three values
     moving_a.add_value(average) #moving average filter gets the new data
-    #dynamic_thres.add_value(average)
+
 
     if linear_s.update(average, moving_a.get_average()): #peak went under the moving_average value
-        steps += count_reg.validate_step(interval,1)
+        steps += count_reg.validate_step(interval,2)
         print("Steps: ", steps)
         interval = 0
     #if moving_a.get_average() > moving_b.get_average():
@@ -113,7 +109,7 @@ while True:
      #   display.set_pixel(2,2,0)
     #print((average, moving_a.get_average(), linear_s.ret()))
     #1000 if linear_s.update(average, moving_a.get_average()) else 0,
-    print((average, accelerometer.get_x(), accelerometer.get_y(), accelerometer.get_z()))
+    #print((average, moving_a.get_average()))
 
     #print(dynamic_thres.get_thres())
 
