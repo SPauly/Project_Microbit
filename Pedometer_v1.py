@@ -1,7 +1,9 @@
+# Schreibe hier Deinen Code :-)
 from microbit import accelerometer
 from microbit import sleep
 import math
 import utime as ut
+
 class MovingAverage:  #Moving Average filter to detect a "dynamic threshold"
     data_pool = 0  #Size of data_pool -> amount of Samples
     circular_buffer_index = 0 #index to know where to read/write
@@ -22,33 +24,6 @@ class MovingAverage:  #Moving Average filter to detect a "dynamic threshold"
     def get_average(self):
         return(self.moving_average)
 
-class DynamicThreshold:
-    maxi = 0 #Maximum Value
-    mini = 2000 #Minimum Value
-    dynamic_threshold = 0 #moving average value
-    update_rate = 0
-    sample_count = 0
-
-    def __init__(self, update):
-        self.update_rate = update
-
-    def add_value(self, value):
-        if self.sample_count > self.update_rate:
-            self.dynamic_threshold = (self.maxi + self.mini) / 2
-            self.maxi = 0
-            self.mini = 2000
-            self.sample_count = 0
-        if value > self.maxi:
-            self.maxi = value
-        if value < self.mini:
-            self.mini = value
-        self.sample_count += 1
-    def get_thres(self):
-        return(self.dynamic_threshold)
-    def get_min(self):
-        return(self.mini)
-    def get_max(self):
-        return(self.maxi)
 
 class LinearShiftRegister: #Linear-shift-register helps further filtering the data and detecting peaks
     sample_new = 0 #holds the newest sample
@@ -84,15 +59,18 @@ class CountRegulation:
     searching_regulation = True #puts the counter in searching for a rhythmic pattern False = found one
     steps_temp = 0 #holds the temporary steps
 
+
     def validate_step(self, interval, regulation):
         #interval = the time between two steps regulation = amount of steps it takes to be a
         #rhythmic pattern
+        #print(self.steps_temp)
         if self.steps_temp >= regulation: # True = we are in rhythmic pattern now and start back at 0
             self.steps_temp = 0
             self.searching_regulation = False
+        #print(interval)
         if interval >= 10 and interval <= 100: #the step happened in a valid timewindow
             self.steps_temp += 1 #increase steps_temp
-            print("Valid Step -------------------  ", self.steps_temp)
+            print("\nValid Step -------------------  ", self.steps_temp)
             if self.steps_temp >= regulation: #are we in a pattern?
                 self.searching_regulation = False #then go in found mode to update frequently
 
@@ -105,6 +83,7 @@ class CountRegulation:
         else: #in no pattern yet and will just return 0
             return 0
 
+
 def quadsum(values):
     sum = 0
     for x in values:
@@ -112,11 +91,9 @@ def quadsum(values):
     return sum
 
 moving_a = MovingAverage(50) #moving average
-dynamic_thres = DynamicThreshold(50) #dynamic_threshold
 linear_s = LinearShiftRegister(70) #LinearShiftRegister
 count_reg = CountRegulation() #Regulates whether the step is valid
 steps = 0 #steps taken
-wron_steps = 0 #how many wrong steps
 interval = 0 #interval
 
 
@@ -136,7 +113,7 @@ while True:
      #   display.set_pixel(2,2,0)
     #print((average, moving_a.get_average(), linear_s.ret()))
     #1000 if linear_s.update(average, moving_a.get_average()) else 0,
-    print((linear_s.ret_new(), moving_a.get_average()))
+    #print((average, accelerometer.get_x(), accelerometer.get_y(), accelerometer.get_z()))
 
     #print(dynamic_thres.get_thres())
 
