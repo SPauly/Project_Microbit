@@ -113,7 +113,7 @@ while True:
      #   display.set_pixel(2,2,0)
     #print((average, moving_a.get_average(), linear_s.ret()))
     #1000 if linear_s.update(average, moving_a.get_average()) else 0,
-    #print((average, accelerometer.get_x(), accelerometer.get_y(), accelerometer.get_z()))
+    print((average, accelerometer.get_x(), accelerometer.get_y(), accelerometer.get_z()))
 
     #print(dynamic_thres.get_thres())
 
