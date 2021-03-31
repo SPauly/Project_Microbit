@@ -1,4 +1,4 @@
-from microbit import accelerometer
+from microbit import accelerometer #damit die library von microbit genutzt wird
 from microbit import sleep
 import math
 import utime as ut
