@@ -58,7 +58,7 @@ class CountRegulation:
         global steps_temp
         #interval = the time between two steps regulation = amount of steps it takes to be a
         #rhythmic pattern
-        #print(steps_temp)
+
         if steps_temp >= regulation: # True = we are in rhythmic pattern now and start back at 0
             steps_temp = 0
             searching_regulation = False
@@ -103,12 +103,8 @@ while True:
         steps += count_reg.validate_step(interval,2)
         print("Steps: ", steps)
         interval = 0
-    #if moving_a.get_average() > moving_b.get_average():
-     #   display.set_pixel(2,2,9)
-    #else:
-     #   display.set_pixel(2,2,0)
+
     #print((average, moving_a.get_average(), linear_s.ret()))
-    #1000 if linear_s.update(average, moving_a.get_average()) else 0,
     #print((average, moving_a.get_average()))
 
     print(dynamic_thres.get_thres())
