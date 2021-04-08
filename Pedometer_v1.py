@@ -111,7 +111,5 @@ while True:
     #1000 if linear_s.update(average, moving_a.get_average()) else 0,
     #print((average, moving_a.get_average()))
 
-    print(dynamic_thres.get_thres())
-
     sleep(13) #-> 6ms for the calculations + 14 = 20ms = 50Hz
     interval += 1 #one cyle is complete so update the rate
