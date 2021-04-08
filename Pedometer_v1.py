@@ -97,7 +97,7 @@ while True:
     values = accelerometer.get_values() #x, y, z -> tuple
     average = math.sqrt(quadsum(values)/3) #average of the three values
     moving_a.add_value(average) #moving average filter gets the new data
-
+    interval += 1 #one cyle is complete so update the rate
 
     if linear_s.update(average, moving_a.get_average()): #peak went under the moving_average value
         steps += count_reg.validate_step(interval,2)
