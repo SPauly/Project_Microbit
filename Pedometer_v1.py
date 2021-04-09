@@ -94,8 +94,8 @@ interval = 0 #interval
 
 
 while True:
-    values = accelerometer.get_values() #x, y, z -> tuple
-    average = math.sqrt(quadsum(values)/3) #average of the three values
+    AccelerometerData = accelerometer.get_values() #x, y, z -> tuple
+    average = math.sqrt(quadsum(AccelerometerData)/3) #average of the three values
     moving_a.add_value(average) #moving average filter gets the new data
     interval += 1 #one cyle is complete so update the rate
 
