@@ -104,6 +104,6 @@ while True:
         print("Steps: ", steps)
         interval = 0
 
-    print((AccelerometerAverage, moving_a.get_average(), linearshift_reg.ret_old()))
+    print((AccelerometerAverage, moving_a.get_average(), linearshift_reg.get_oldsample()))
 
     sleep(13) #-> 6ms for the calculations + 14 = 20ms = 50Hz
