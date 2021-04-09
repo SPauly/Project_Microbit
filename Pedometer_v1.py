@@ -43,15 +43,15 @@ class LinearShiftRegister: #Linear-shift-register helps further filtering the da
                 self.is_step = False
         return self.is_step
 
-    def ret_new(self):
+    def get_newsample(self):
         return (self.sample_new)
-    def ret_old(self):
+    def get_oldsample(self):
         return (self.sample_old)
 
 steps_temp = 0 #holds the temporary steps
 
 class CountRegulation:
-    searching_regulation = True #puts the counter in searching for a rhythmic pattern False = found one
+    _is_searching_regulation = True #puts the counter in searching for a rhythmic pattern False = found one
 
 
     def validate_step(self, interval, regulation):
