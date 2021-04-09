@@ -4,21 +4,21 @@ import math
 import utime as ut
 
 class MovingAverage:  #Moving Average filter to detect a "dynamic threshold"
-    data_pool = 0  #Size of data_pool -> amount of Samples
+    samples = 0
     circular_buffer_index = 0 #index to know where to read/write
     moving_average = 0 #moving average value
 
     def __init__(self, size):
-        self.data_pool = [0]*size #initialize an array for all the samples (size of data_pool)
+        self.samples = [0]*size #initialize an array for all the samples (size of samples)
 
     def add_value(self, value): #adds a new sample to the pool
         self.circular_buffer_index += 1 #move the index
-        if self.circular_buffer_index >= len(self.data_pool): #end? -> start at 0
+        if self.circular_buffer_index >= len(self.samples): #end? -> start at 0
             self.circular_buffer_index = 0
-        old_value = self.data_pool[self.circular_buffer_index]/len(self.data_pool) #save the average of old value at index position
-        self.data_pool[self.circular_buffer_index] = value #write the new value
-        self.moving_average -= old_value #calculate the moving average = n1+n2+...ndata_pool/data_pool
-        self.moving_average += value/len(self.data_pool) #middle part stays the same = faster way is to substract the oldest value and add the newest value to moving_average
+        old_value = self.samples[self.circular_buffer_index]/len(self.samples) #save the average of old value at index position
+        self.samples[self.circular_buffer_index] = value #write the new value
+        self.moving_average -= old_value #calculate the moving average = n1+n2+...nsamples/samples
+        self.moving_average += value/len(self.samples) #middle part stays the same = faster way is to substract the oldest value and add the newest value to moving_average
 
     def get_average(self):
         return(self.moving_average)
