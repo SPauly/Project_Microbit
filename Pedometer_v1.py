@@ -87,7 +87,7 @@ def quadsum(values):
     return sum
 
 moving_a = MovingAverage(50) #moving average
-linear_s = LinearShiftRegister(70) #LinearShiftRegister
+linearshift_reg = LinearShiftRegister(70) #LinearShiftRegister
 count_reg = CountRegulation() #Regulates whether the step is valid
 steps = 0 #steps taken
 interval = 0 #interval
@@ -99,11 +99,11 @@ while True:
     moving_a.add_value(AccelerometerAverage) #moving average filter gets the new data
     interval += 1 #one cyle is complete so update the rate
 
-    if linear_s.update(AccelerometerAverage, moving_a.get_average()): #peak went under the moving_average value
+    if linearshift_reg.update(AccelerometerAverage, moving_a.get_average()): #peak went under the moving_average value
         steps += count_reg.validate_step(interval,2)
         print("Steps: ", steps)
         interval = 0
 
-    print((AccelerometerAverage, moving_a.get_average(), linear_s.ret_old()))
+    print((AccelerometerAverage, moving_a.get_average(), linearshift_reg.ret_old()))
 
     sleep(13) #-> 6ms for the calculations + 14 = 20ms = 50Hz
