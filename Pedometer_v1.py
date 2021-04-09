@@ -33,7 +33,7 @@ class LinearShiftRegister: #Linear-shift-register helps further filtering the da
     def __init__(self, prec):
         self.precision = prec
 
-    def update(self, sample_result, moving_av): #updates the Register and watches for peaks
+    def _is_step(self, sample_result, moving_av): #updates the Register and watches for peaks
         self.sample_old = self.sample_new #shift new sample to old one
         if sample_result > self.sample_new + self.precision or sample_result < self.sample_new - self.precision: #is the sample_result precision bigger or smaller
             self.sample_new = sample_result #shift sample result to sample_new
@@ -99,7 +99,7 @@ while True:
     moving_a.add_sample(AccelerometerAverage) #moving average filter gets the new data
     interval += 1 #one cyle is complete so update the rate
 
-    if linearshift_reg.update(AccelerometerAverage, moving_a.get_average()): #peak went under the moving_average value
+    if linearshift_reg._is_step(AccelerometerAverage, moving_a.get_average()): #peak went under the moving_average value
         steps += count_reg.validate_step(interval,2)
         print("Steps: ", steps)
         interval = 0
