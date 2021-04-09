@@ -11,7 +11,7 @@ class MovingAverage:  #Moving Average filter to detect a "dynamic threshold"
     def __init__(self, size):
         self.samples = [0]*size #initialize an array for all the samples (size of samples)
 
-    def add_value(self, value): #adds a new sample to the pool
+    def add_sample(self, value): #adds a new sample to the pool
         self.circular_buffer_index += 1 #move the index
         if self.circular_buffer_index >= len(self.samples): #end? -> start at 0
             self.circular_buffer_index = 0
@@ -96,7 +96,7 @@ interval = 0 #interval
 while True:
     Accelerometer = accelerometer.get_values() #x, y, z -> tuple
     AccelerometerAverage = math.sqrt(quadsum(Accelerometer)/3) #average of the three values
-    moving_a.add_value(AccelerometerAverage) #moving average filter gets the new data
+    moving_a.add_sample(AccelerometerAverage) #moving average filter gets the new data
     interval += 1 #one cyle is complete so update the rate
 
     if linearshift_reg.update(AccelerometerAverage, moving_a.get_average()): #peak went under the moving_average value
