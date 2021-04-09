@@ -95,15 +95,15 @@ interval = 0 #interval
 
 while True:
     AccelerometerData = accelerometer.get_values() #x, y, z -> tuple
-    average = math.sqrt(quadsum(AccelerometerData)/3) #average of the three values
-    moving_a.add_value(average) #moving average filter gets the new data
+    AccelerometerAverage = math.sqrt(quadsum(AccelerometerData)/3) #average of the three values
+    moving_a.add_value(AccelerometerAverage) #moving average filter gets the new data
     interval += 1 #one cyle is complete so update the rate
 
-    if linear_s.update(average, moving_a.get_average()): #peak went under the moving_average value
+    if linear_s.update(AccelerometerAverage, moving_a.get_average()): #peak went under the moving_average value
         steps += count_reg.validate_step(interval,2)
         print("Steps: ", steps)
         interval = 0
 
-    print((average, moving_a.get_average(), linear_s.ret_old()))
+    print((AccelerometerAverage, moving_a.get_average(), linear_s.ret_old()))
 
     sleep(13) #-> 6ms for the calculations + 14 = 20ms = 50Hz
