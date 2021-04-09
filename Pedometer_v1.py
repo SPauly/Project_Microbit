@@ -1,7 +1,6 @@
 from microbit import accelerometer
 from microbit import sleep
 import math
-import utime as ut
 
 class MovingAverage:  #Moving Average filter to detect a "dynamic threshold"
     samples = 0
@@ -72,6 +71,7 @@ class CountRegulation:
         else:
             steps_temp = 0 #means pattern is set to 0 again
             self._is_searching_regulation = True #we have to search a new one
+            print("\n------------------------------------------------------")
 
         if self._is_searching_regulation == False: #means we are in a pattern and can now update the steps
             return steps_temp
