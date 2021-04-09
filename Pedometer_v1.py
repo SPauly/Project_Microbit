@@ -61,20 +61,19 @@ class CountRegulation:
 
         if steps_temp >= regulation: # True = we are in rhythmic pattern now and start back at 0
             steps_temp = 0
-            searching_regulation = False
         if interval > 2:
             print(interval)
         if interval >= 10 and interval <= 100: #the step happened in a valid timewindow
             steps_temp += 1 #increase steps_temp
             print("\nValid Step -------------------  ", steps_temp)
             if steps_temp >= regulation: #are we in a pattern?
-                self.searching_regulation = False #then go in found mode to update frequently
+                self._is_searching_regulation = False #then go in found mode to update frequently
 
         else:
             steps_temp = 0 #means pattern is set to 0 again
-            self.searching_regulation = True #we have to search a new one
+            self._is_searching_regulation = True #we have to search a new one
 
-        if self.searching_regulation == False: #means we are in a pattern and can now update the steps
+        if self._is_searching_regulation == False: #means we are in a pattern and can now update the steps
             return steps_temp
         else: #in no pattern yet and will just return 0
             return 0
