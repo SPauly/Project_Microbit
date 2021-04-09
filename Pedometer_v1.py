@@ -50,33 +50,6 @@ class LinearShiftRegister: #Linear-shift-register helps further filtering the da
 steps_temp = 0 #holds the temporary steps
 
 class CountRegulation:
-    _is_searching_regulation = True #puts the counter in searching for a rhythmic pattern False = found one
-
-
-    def validate_step(self, interval, regulation):
-        global steps_temp
-        #interval = the time between two steps regulation = amount of steps it takes to be a
-        #rhythmic pattern
-
-        if steps_temp >= regulation: # True = we are in rhythmic pattern now and start back at 0
-            steps_temp = 0
-        if interval > 2:
-            print(interval)
-        if interval >= 10 and interval <= 100: #the step happened in a valid timewindow
-            steps_temp += 1 #increase steps_temp
-            print("\nValid Step -------------------  ", steps_temp)
-            if steps_temp >= regulation: #are we in a pattern?
-                self._is_searching_regulation = False #then go in found mode to update frequently
-
-        else:
-            steps_temp = 0 #means pattern is set to 0 again
-            self._is_searching_regulation = True #we have to search a new one
-            print("\n------------------------------------------------------")
-
-        if self._is_searching_regulation == False: #means we are in a pattern and can now update the steps
-            return steps_temp
-        else: #in no pattern yet and will just return 0
-            return 0
 
 
 def quadsum(values):
@@ -96,12 +69,9 @@ while True:
     Accelerometer = accelerometer.get_values() #x, y, z -> tuple
     AccelerometerAverage = math.sqrt(quadsum(Accelerometer)/3) #average of the three values
     moving_a.add_sample(AccelerometerAverage) #moving average filter gets the new data
-    interval += 1 #one cyle is complete so update the rate
 
     if linearshift_reg._is_step(AccelerometerAverage, moving_a.get_average()): #peak went under the moving_average value
-        steps += count_reg.validate_step(interval,2)
         print("Steps: ", steps)
-        interval = 0
 
     print((AccelerometerAverage, moving_a.get_average(), linearshift_reg.get_oldsample()))
 
