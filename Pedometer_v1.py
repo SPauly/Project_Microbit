@@ -49,7 +49,7 @@ class LinearShiftRegister: #Linear-shift-register helps further filtering the da
 
 steps_temp = 0 #holds the temporary steps
 
-class CountRegulation:
+#class CountRegulation:
 
 
 def quadsum(values):
@@ -60,7 +60,7 @@ def quadsum(values):
 
 moving_a = MovingAverage(50) #moving average
 linearshift_reg = LinearShiftRegister(70) #LinearShiftRegister
-count_reg = CountRegulation() #Regulates whether the step is valid
+#count_reg = CountRegulation() #Regulates whether the step is valid
 steps = 0 #steps taken
 interval = 0 #interval
 
@@ -73,6 +73,6 @@ while True:
     if linearshift_reg._is_step(AccelerometerAverage, moving_a.get_average()): #peak went under the moving_average value
         print("Steps: ", steps)
 
-    print((AccelerometerAverage, moving_a.get_average(), linearshift_reg.get_oldsample()))
+    print((moving_a.get_average(), linearshift_reg.get_oldsample()))
 
     sleep(13) #-> 6ms for the calculations + 14 = 20ms = 50Hz
