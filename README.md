@@ -1,5 +1,8 @@
 # Project_Microbit
 
+The following tasks were the preparation for an internship at the Fraunhofer IMS which unfortunately was canceled due to covid. After having left those files alone for about two years I decided to put them on here and maybe work on them once the LSMS Project is finished. Feel free to hit me up for questions, contributions etc. :) 
+And yes, I know this project is poorly documented and the code is all over the place... All things that will change once I reopen this project. 
+
 # Task:
 
 - Program a step detection (when the micro:bit is attached to the body or directly to the foot).
