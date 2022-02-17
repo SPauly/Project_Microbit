@@ -1,16 +1,16 @@
 # Project_Microbit
 
-# Aufgabenstellung:
+# Task:
 
-•	Programmieren Sie eine Schritterkennung (wenn man den micro:bit am Körper oder direkt am Fuß befestigt hat)
+- Program a step detection (when the micro:bit is attached to the body or directly to the foot).
 
-•	Programmieren Sie eine Unterscheidung zwischen Schritten und Sprüngen
+- Program a distinction between steps and jumps
 
-•	Versuchen sie einfache Gesten-Erkennung zu programmieren, wenn man den micro:bit in der Hand hält und eine Geste in die Luft schreibt: Können sie z.B. einen horizontalen Strich   von einem vertikalen Strich unterscheiden. Können Sie erkennen, ob ein horizontaler Strich unmittelbar gefolgt von einem vertikalen Strich in die Luft gezeichnet wurde.
+- Try to program simple gesture recognition when holding the micro:bit in your hand and writing a gesture in the air: Can they distinguish a horizontal stroke from a vertical stroke, for example. Can they tell if a horizontal stroke is drawn in the air immediately followed by a vertical stroke.
 
 # Task 1 Pedometer:
 
-Sources:
+Useful Sources:
 https://www.analog.com/en/analog-dialogue/articles/pedometer-design-3-axis-digital-acceler.html#  
 https://www.researchgate.net/publication/329032614_A_More_Reliable_Step_Counter_using_Built-in_Accelerometer_in_Smartphone 
 
